@@ -1,4 +1,6 @@
 import {
+  Center,
+  Spinner,
   VStack,
   Button,
   Input,
@@ -32,7 +34,6 @@ function Details() {
           />
           <FormHelperText>Enter a launch id to get the details.</FormHelperText>
           <Button color="gray.600" type='submit' onClick={_ => { 
-            console.log(launchStatus)
             if(launchStatus === 'idle' || launchStatus === 'succeeded'){
               dispatch(fetchDetails(launchId));
             }
@@ -42,12 +43,30 @@ function Details() {
         </VStack>
       </FormControl>
       <VStack>
-        {launchStatus === "succeeded" ? 
-          <LaunchCard 
-            launch={launchDetails} 
-            name={launchDetails.name} 
-            id={launchDetails.id}
-        />: <></>}
+        {launchStatus === "loading" 
+          ? 
+            <Center>
+              <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='gray.500'
+                size='xl'
+              />
+            </Center>
+          :
+            <></>
+        }
+        {launchStatus === "succeeded" 
+          ? 
+            <LaunchCard 
+              launch={launchDetails} 
+              name={launchDetails?.name} 
+              id={launchDetails?.id}
+            />
+          :
+            <></>
+        }
     </VStack>
     </div>
   )

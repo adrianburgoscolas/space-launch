@@ -15,7 +15,7 @@ function LaunchCard({name, id, launch}) {
         shadow="lg" 
         color="gray.600" 
         transition='all 200' 
-        w={["100%", 96]}
+        w={["100%", 80]}
       >
         <CardHeader>
           <Heading size='md'>{name}</Heading>
@@ -37,7 +37,7 @@ function LaunchCard({name, id, launch}) {
                 Status
                 </Heading>
                 <Text pb='2' fontSize='sm'>
-                {launch.status.name}
+                {launch?.status?.name}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
                   Mission:
@@ -46,19 +46,19 @@ function LaunchCard({name, id, launch}) {
                   Id
                 </Heading>
                 <Text pb='2' fontSize='sm'>
-                {launch.mission.id}
+                {launch?.mission?.id}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
                   Name
                 </Heading>
                 <Text pb='2' fontSize='sm'>
-                {launch.mission.name}
+                {launch?.mission?.name}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
                   Description
                 </Heading>
                 <Text pb='2' fontSize='sm'>
-                {launch.mission.description}
+                {launch?.mission?.description}
                 </Text>
               </Box>
               :
