@@ -33,7 +33,7 @@ function Details() {
           <FormHelperText>Enter a launch id to get the details.</FormHelperText>
           <Button color="gray.600" type='submit' onClick={_ => { 
             console.log(launchStatus)
-            if(launchStatus === 'idle'){
+            if(launchStatus === 'idle' || launchStatus === 'succeeded'){
               dispatch(fetchDetails(launchId));
             }
             dispatch(setId(''));
