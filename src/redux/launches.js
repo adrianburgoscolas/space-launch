@@ -1,24 +1,31 @@
-import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-
-export const fetchDetails = createAsyncThunk('launches/fetchDetails', async (id) => {
-  const response = await fetch(`/api/3.3.0/launch/${id}`);
-  const json = await response.json();
-  return json.results
-});
+import axios from "axios";
+import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 export const fetchLaunches = createAsyncThunk('launches/fetchLaunches', async () => {
-  const response = await fetch("/api/3.3.0/launch/upcoming");
-  const json = await response.json();
-  return json.results
+  const response = await axios("/api/3.3.0/launch/upcoming");
+  return response.data.results
+});
+
+export const fetchDetails = createAsyncThunk('launches/fetchDetails', async (id) => {
+  const response = await axios(`https://spacelaunchnow.me/api/3.3.0/launch/${id}`);
+  return response.data
 });
 
 export const launchesSlice = createSlice({
   name: 'launches',
   initialState: {
     list: [],
-    launch: {},
+    id: '',
     status: 'idle',
     error: null,
+    launch: {},
+    detailsStatus: 'idle',
+    detailsError: null,
+  },
+  reducers: {
+    setId: (state, action) => {
+      state.id = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -35,21 +42,21 @@ export const launchesSlice = createSlice({
         state.error = action.error.message
       })
       .addCase(fetchDetails.pending, (state, action) => {
-        state.status = 'loading'
+        state.detailsStatus = 'loading'
       })
       .addCase(fetchDetails.fulfilled, (state, action) => {
-        state.status = 'succeeded'
+        state.detailsStatus = 'succeeded'
         // Add any fetched launch to the array
         state.launch = action.payload
       })
       .addCase(fetchDetails.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.detailsError = action.error.message
       })
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getLaunches } = launchesSlice.actions;
+export const { setId } = launchesSlice.actions;
 
 export default launchesSlice.reducer

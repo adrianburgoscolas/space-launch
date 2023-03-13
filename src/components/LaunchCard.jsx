@@ -2,32 +2,68 @@ import {
   Card, 
   CardHeader, 
   CardBody, 
-  CardFooter,
   Heading,
   Stack,
-  StackDivider,
   Box,
   Text
 } from '@chakra-ui/react';
 
-function LaunchCard({name, launchid}) {
+function LaunchCard({name, id, launch}) {
   return (
     <>
-      <Card _hover={{transform: "scale(1.05)"}} transition='all 200' w="100%">
+      <Card 
+        shadow="lg" 
+        color="gray.600" 
+        transition='all 200' 
+        w={["100%", 96]}
+      >
         <CardHeader>
           <Heading size='md'>{name}</Heading>
         </CardHeader>
 
         <CardBody>
-          <Stack divider={<StackDivider />} spacing='4'>
+          <Stack spacing='4'>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
                 Id
               </Heading>
-              <Text pt='2' fontSize='sm'>
-                {launchid}
+              <Text pb='2' fontSize='sm'>
+                {id}
               </Text>
             </Box>
+            { launch?
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
+                Status
+                </Heading>
+                <Text pb='2' fontSize='sm'>
+                {launch.status.name}
+                </Text>
+                <Heading size='xs' textTransform='uppercase'>
+                  Mission:
+                </Heading>
+                <Heading size='xs' textTransform='uppercase'>
+                  Id
+                </Heading>
+                <Text pb='2' fontSize='sm'>
+                {launch.mission.id}
+                </Text>
+                <Heading size='xs' textTransform='uppercase'>
+                  Name
+                </Heading>
+                <Text pb='2' fontSize='sm'>
+                {launch.mission.name}
+                </Text>
+                <Heading size='xs' textTransform='uppercase'>
+                  Description
+                </Heading>
+                <Text pb='2' fontSize='sm'>
+                {launch.mission.description}
+                </Text>
+              </Box>
+              :
+              <></>
+          }
           </Stack>
         </CardBody>
       </Card>

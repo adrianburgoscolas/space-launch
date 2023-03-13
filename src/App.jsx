@@ -3,11 +3,13 @@ import Home from "./components/Home";
 import Launches from "./components/Launches";
 import Details from "./components/Details";
 import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
 import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <>
+      <Navbar />
       <Sidebar />
       <Routes>
         <Route index element={<Home />}/>

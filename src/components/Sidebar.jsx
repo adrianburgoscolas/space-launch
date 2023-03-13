@@ -24,8 +24,10 @@ function Sidebar() {
 
   return (
     <>
-      <Box top='0' w='100%' zIndex='10' pos='fixed' bg='darkgray'>
+      <Box bg="gray.100" top='0' w='100%' zIndex='10' pos='fixed'>
         <IconButton 
+          display={["block", "none"]}
+          color="gray.600"
           h='12'
           aria-label='Open Sidebar'
           icon={<HamburgerIcon />}
@@ -41,8 +43,14 @@ function Sidebar() {
         onClose={onClose}
         finalFocusRef={btnRef}
       >
-        <DrawerOverlay />
-        <DrawerContent>
+        <DrawerOverlay display={["block", "none"]}/>
+        <DrawerContent 
+          display={["block", "none"]}
+          color="gray.600"
+          fontWeight="bold"
+
+          bg="gray.100"
+        >
           <DrawerCloseButton />
           <DrawerHeader>Space Launch</DrawerHeader>
 
