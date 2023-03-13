@@ -7,7 +7,7 @@ export const fetchLaunches = createAsyncThunk('launches/fetchLaunches', async ()
 });
 
 export const fetchDetails = createAsyncThunk('launches/fetchDetails', async (id) => {
-  const response = await axios(`https://spacelaunchnow.me/api/3.3.0/launch/${id}`);
+  const response = await axios(`/api/3.3.0/launch/${id}`);
   return response.data
 });
 
