@@ -9,4 +9,3 @@ This is a solution to the Space Launch coding challenge.
 - Mobile-first workflow
 - Redux.js
 
-
