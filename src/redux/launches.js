@@ -2,12 +2,12 @@ import axios from "axios";
 import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 export const fetchLaunches = createAsyncThunk('launches/fetchLaunches', async () => {
-  const response = await axios("/api/3.3.0/launch/upcoming");
+  const response = await axios(`${process.env.REACT_APP_REACT_ENV === 'production'?'https://spacelaunchnow.me':''}/api/3.3.0/launch/upcoming`);
   return response.data.results
 });
 
 export const fetchDetails = createAsyncThunk('launches/fetchDetails', async (id) => {
-  const response = await axios(`/api/3.3.0/launch/${id}`);
+  const response = await axios(`${process.env.REACT_APP_REACT_ENV === 'production'?'https://spacelaunchnow.me':''}/api/3.3.0/launch/${id}`);
   return response.data
 });
 
@@ -29,7 +29,7 @@ export const launchesSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchLaunches.pending, (state, action) => {
+      .addCase(fetchLaunches.pending, (state, _) => {
         state.status = 'loading'
       })
       .addCase(fetchLaunches.fulfilled, (state, action) => {
@@ -41,7 +41,7 @@ export const launchesSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(fetchDetails.pending, (state, action) => {
+      .addCase(fetchDetails.pending, (state, _) => {
         state.detailsStatus = 'loading'
       })
       .addCase(fetchDetails.fulfilled, (state, action) => {

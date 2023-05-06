@@ -1,6 +1,12 @@
+import {
+  Center,
+  Heading
+} from "@chakra-ui/react";
 function NotFound() {
   return (
-    <div>404 Not Found</div>
+    <Heading>
+      <Center color='gray.600' mt='20'>404 Not Found</Center>
+    </Heading>
   )
 }
 
