@@ -8,10 +8,12 @@ import {
   FormLabel,
   FormHelperText,
 } from '@chakra-ui/react'
+import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDetails, setId } from "../redux/launches";
 import LaunchCard from "./LaunchCard"
 import {Heading} from '@chakra-ui/react';
+import { useParams } from "react-router-dom";
 
 function Details() {
 
@@ -19,6 +21,13 @@ function Details() {
   const launchStatus = useSelector(state => state.launches.detailsStatus)
   const launchDetails = useSelector( state => state.launches.launch )
   const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if(id) {
+      dispatch(setId(id))
+    }
+  },[id, dispatch]);
 
   return (
     <div>
@@ -57,7 +66,7 @@ function Details() {
           :
             <></>
         }
-        {launchStatus === "succeeded" 
+        {(launchDetails.id === id || launchDetails.id === "" || id === undefined) && launchStatus === "succeeded" 
           ? 
             <LaunchCard 
               launch={launchDetails} 

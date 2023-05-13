@@ -15,7 +15,10 @@ function App() {
         <Route index element={<Home />}/>
         <Route path="/" element={<Home />}/>
         <Route path="/launches" element={<Launches />}/>
-        <Route path="/details" element={<Details />}/>
+        <Route path="/details">
+          <Route path=":id" element={<Details />}/>
+          <Route path="" element={<Details />}/>
+        </Route>
         <Route path="*" element={<NotFound />}/>
       </Routes>
     </>

@@ -7,6 +7,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLaunches } from "../redux/launches";
 import { useEffect } from "react";
+import { Link } from 'react-router-dom';
+
 import LaunchCard from "./LaunchCard"
 
 function Launches() {
@@ -17,7 +19,7 @@ function Launches() {
   let list = [];
 
   if(launchesStatus === "succeeded"){
-    list = launchesList.map(obj => <LaunchCard key={obj?.id} name={obj?.name} id={obj?.id}/>)
+    list = launchesList.map(obj => <Link key={obj?.id} to={`/details/${obj.id}`}><LaunchCard name={obj?.name} id={obj?.id}/></Link>)
   }
 
   useEffect(() => {
