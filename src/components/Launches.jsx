@@ -13,6 +13,7 @@ import LaunchCard from "./LaunchCard"
 
 function Launches() {
 
+  const launchesError = useSelector(state => state.launches.error);
   const launchesStatus = useSelector(state => state.launches.status);
   const launchesList = useSelector(state => state.launches.list);
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function Launches() {
   }
 
   useEffect(() => {
+    console.log(launchesStatus);
+  });
+  useEffect(() => {
     if(launchesStatus === "idle") {
       dispatch(fetchLaunches());
     }
@@ -30,6 +34,7 @@ function Launches() {
   return (
     <div>
       <Heading color="gray.600" align='center' mt='12' p='5'>Upcoming Rocket Launches</Heading>
+      {launchesStatus === "failed" && <Center>{launchesError}</Center>}
       {launchesStatus === "loading" 
         ? 
           <Center>

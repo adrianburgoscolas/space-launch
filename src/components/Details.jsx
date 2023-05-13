@@ -20,8 +20,13 @@ function Details() {
   const launchId = useSelector(state => state.launches.id);
   const launchStatus = useSelector(state => state.launches.detailsStatus)
   const launchDetails = useSelector( state => state.launches.launch )
+  const launchError = useSelector( state => state.launches.detailsError )
   const dispatch = useDispatch();
   const { id } = useParams();
+
+  useEffect(() => {
+    console.log(launchStatus);
+  });
 
   useEffect(() => {
     if(id) {
@@ -52,6 +57,7 @@ function Details() {
         </VStack>
       </FormControl>
       <VStack>
+        {launchStatus === "failed" && <Center>{launchError}</Center>}
         {launchStatus === "loading" 
           ? 
             <Center>
