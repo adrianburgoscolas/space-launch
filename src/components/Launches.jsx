@@ -1,8 +1,9 @@
 import {
+  Box,
   Center,
   Spinner,
   Heading, 
-  SimpleGrid
+  Wrap,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLaunches } from "../redux/launches";
@@ -17,26 +18,20 @@ function Launches() {
   const launchesStatus = useSelector(state => state.launches.status);
   const launchesList = useSelector(state => state.launches.list);
   const dispatch = useDispatch();
-  let list = [];
+  let list = launchesList?.map(obj => <Link key={obj?.id} to={`/${obj.id}`}><LaunchCard time={obj?.net} name={obj?.name}/></Link>)
 
-  if(launchesStatus === "succeeded"){
-    list = launchesList.map(obj => <Link key={obj?.id} to={`/details/${obj.id}`}><LaunchCard name={obj?.name} id={obj?.id}/></Link>)
-  }
-
-  useEffect(() => {
-    console.log(launchesStatus);
-  });
+//  useEffect(() => {
+//    console.log(launchesStatus, launchesError, launchesList);
+//  });
   useEffect(() => {
     if(launchesStatus === "idle") {
       dispatch(fetchLaunches());
     }
   }, [launchesStatus, dispatch]);
   return (
-    <div>
+    <Box p={[0,'1rem']} maxW='80rem' mx='auto'>
       <Heading color="gray.600" align='center' mt='12' p='5'>Upcoming Rocket Launches</Heading>
-      {launchesStatus === "failed" && <Center>{launchesError}</Center>}
-      {launchesStatus === "loading" 
-        ? 
+     {launchesStatus === "loading" &&
           <Center>
             <Spinner
               thickness='4px'
@@ -46,13 +41,16 @@ function Launches() {
               size='xl'
             />
           </Center>
+      } 
+      {launchesError ? 
+        <Center>{launchesError}</Center>
         :
-          <></>
+        <Center>
+          <Wrap p='1rem' justify='center' spacing='1rem'>{list}</Wrap>
+        </Center>
       }
-      <Center>
-        <SimpleGrid columns={[1,null,null,3]} gap='5'>{list}</SimpleGrid>
-    </Center>
-    </div>
+      
+    </Box>
   )
 }
 

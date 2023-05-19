@@ -1,37 +1,53 @@
+import dayjs from 'dayjs';
+import { Link as RouterLink } from "react-router-dom";
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { 
+  Link,
+  HStack,
   Card, 
   CardHeader, 
   CardBody, 
   Heading,
   Stack,
   Box,
-  Text
+  Text,
+  Image,
+  Flex,
+  Spacer
 } from '@chakra-ui/react';
 
-function LaunchCard({name, id, launch}) {
+function LaunchCard({fullCard, time, name, id, launch, imageUrl}) {
   return (
     <>
       <Card 
+        rounded={['0','10']}
         shadow="lg" 
         color="gray.600" 
-        transition='all 200' 
-        w={["100%", 80]}
+        w={["100vw",80]}
+        bgGradient="linear(to-tr, cyan.100, cyan.300, blue.300)"
+        _hover={!fullCard && {transform: 'scale(1.05)'}} 
+        transitionDuration='0.3s'
       >
         <CardHeader>
-          <Heading size='md'>{name}</Heading>
+          <Flex minH={imageUrl?16:32} direction='column' justify='between'>
+            {fullCard && <Image mb='1rem' src={imageUrl} alt='Launch Image'/>}
+            <Heading size='md'>{name}</Heading>
+            <Spacer />
+            <Box>{dayjs(time).format('MMM D, YYYY HH:mm:ss UTCZ')}</Box>
+          </Flex>
         </CardHeader>
 
-        <CardBody>
-          <Stack spacing='4'>
-            <Box>
-              <Heading size='xs' textTransform='uppercase'>
+        {fullCard &&
+          <CardBody>
+            <Stack spacing='4'>
+              <Box>
+                <Heading size='xs' textTransform='uppercase'>
                 Id
-              </Heading>
-              <Text pb='2' fontSize='sm'>
+                </Heading>
+                <Text pb='2' fontSize='sm'>
                 {id}
-              </Text>
-            </Box>
-            { launch?
+                </Text>
+              </Box>
               <Box>
                 <Heading size='xs' textTransform='uppercase'>
                 Status
@@ -40,32 +56,36 @@ function LaunchCard({name, id, launch}) {
                 {launch?.status?.name}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
-                  Mission:
+                Mission:
                 </Heading>
                 <Heading size='xs' textTransform='uppercase'>
-                  Id
+                Id
                 </Heading>
                 <Text pb='2' fontSize='sm'>
                 {launch?.mission?.id}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
-                  Name
+                Name
                 </Heading>
                 <Text pb='2' fontSize='sm'>
                 {launch?.mission?.name}
                 </Text>
                 <Heading size='xs' textTransform='uppercase'>
-                  Description
+                Description
                 </Heading>
                 <Text pb='2' fontSize='sm'>
                 {launch?.mission?.description}
                 </Text>
               </Box>
-              :
-              <></>
-          }
-          </Stack>
-        </CardBody>
+            </Stack>
+            <Link as={RouterLink} to="/">
+              <HStack justify="right">
+              <ArrowBackIcon />
+              <Text>Back</Text>
+              </HStack>
+            </Link>
+          </CardBody>
+      }
       </Card>
     </>
   );
